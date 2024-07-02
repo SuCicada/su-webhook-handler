@@ -26,15 +26,17 @@ function WorkflowRunEvent(data: WebhookEventDefinition<"workflow-run-completed">
   const time = format(new Date(data.workflow_run.created_at), 'yyyy-MM-dd HH:mm')
   const workflow = data.workflow_run.name
   const duration = differenceInSeconds(data.workflow_run.updated_at, data.workflow_run.created_at)
-  const status = data.workflow_run.conclusion === 'success' ?
-    '✅' : '❌'
+  const success = data.workflow_run.conclusion === 'success'
+  const status = success ? '✅' : '❌'
   const title = `${status} [${workflow}] ${repo}`
+  const logUrl = success ? "" : `🔗${data.workflow_run.html_url}`
   const body = `
 📦 Repo: ${repo}
 🚦 Workflow: ${workflow}
 📅 Time: ${time}
 👀 Status: ${status}
 ⏱ Duration: ${duration} seconds
+${logUrl}
 `.trim()
   return {title, body}
 }
