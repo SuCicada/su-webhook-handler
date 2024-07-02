@@ -1,0 +1,11 @@
+package-lock.json
+node_modules
+.idea
+*.iml
+
+yarn-error.log
+.env*
+/dist
+/data
+
+/dev.md
