@@ -1,8 +1,8 @@
 import express from "express";
 
 import logger from "morgan";
-import indexRouter from "./routes/index";
-// import usersRouter from "./routes/users";
+import githubRouter from "./routes/index";
+import circleciRouter from "./circleci/index";
 
 var app = express();
 
@@ -11,6 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
+const indexRouter = express.Router();
+indexRouter.use(githubRouter);
+indexRouter.use(circleciRouter);
 
 app.use('/webhook', indexRouter);
 // app.use('/users', usersRouter);
